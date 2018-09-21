@@ -122,7 +122,7 @@ class Game():
         else:
             print('The game was a tie!')
         print('The final score ' + str(self.p1.score) + ' TO ' +
-              str(self.p2.score))
+    str(self.p2.score))
 
     def play_round(self):
         move1 = self.p1.move()
@@ -162,32 +162,42 @@ def beats(one, two):
 
 
 if __name__ == '__main__':
-    p2 = input('Type the selected Game to play: rock,\
-random, reflective, or cycles: >')
-    rounds = input('Enter 1 for a single game and 2 for a full game: >')
+    answer = [Player(), RandomPlayer(), Cycles(), ReflectPlayer()]
+    p2 = input('Select the RPS game you would like to play or just hit any\
+ key and enter for random game: [1]Rock, [2]Random,\
+[3]Reflective, or [4]Cycles: >')
+# answer is a player class list
+# p2 is output input from the user
 
-    while p2 == 'rock'or p2 == 'random'or p2 == 'reflective' or p2 == 'cycles':
+    while p2 != 1 or p2 != 2 or p2 != 3 or p2 != 4:
+        p2 = random.choice(answer)
+        break
+# If the entry is not a specific entry then
+# automatically selects a random choice
 
-        if p2 == 'rock':
-            p2 = Player()
-        elif p2 == 'random':
-            p2 = RandomPlayer()
-        elif p2 == 'cycles':
-            p2 = Cycles()
-        elif p2 == 'reflective':
-            p2 = ReflectPlayer()
-        else:
-            print('Sorry try again')
-            p2 = input('Select Game to Play: Rock, Random, Reflective, or Cycles')
+    if p2 == '1':
+        p2 = Player()
+    elif p2 == '2':
+        p2 = RandomPlayer()
+    elif p2 == '3':
+        p2 = Cycles()
+    elif p2 == '4':
+        p2 = ReflectPlayer()
+# Set the p2 variable to the correct player class
 
+    rounds = input('Enter for [s]ingle game or [f]ull game: >')
     Game = Game(p2)
     while True:
-        if rounds == 'single':
+        if rounds == 's':
             Game.play_single()
             break
-        elif rounds == 'full':
+        elif rounds == 'f':
             Game.play_game()
             break
         else:
             print('Sorry try again')
-            rounds = input('Enter 1 for a single game and 2 for a full game: >')
+            rounds = input('Enter 1 for a single\
+             game and 2 for a full game: >')
+# Ask to select the lenght of the game
+# checks to make sure the entry is correct
+# if not ask ask to repeat
