@@ -86,7 +86,8 @@ class HumanPlayer(Player):
             throw = input('rock, paper, scissors? >')
         return (throw)
 # This class requests a human player to make a selection
-
+# ask what the human play wanr to play and checks
+# if the input is correct
 
 class Game():
 
@@ -107,7 +108,7 @@ class Game():
         else:
             print('The game was a tie!')
         print('The final score ' + str(self.p1.score) + ' TO ' +
-            str(self.p2.score))
+              str(self.p2.score))
 # This class starts the game prints information and calls the playround class
 # Also prints out the final score
 
@@ -122,7 +123,9 @@ class Game():
         else:
             print('The game was a tie!')
         print('The final score ' + str(self.p1.score) + ' TO ' +
-    str(self.p2.score))
+              str(self.p2.score))
+# This class will play a single round of RPS
+# A copy of play_game w/o for loop
 
     def play_round(self):
         move1 = self.p1.move()
