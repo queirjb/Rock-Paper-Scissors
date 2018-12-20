@@ -1,6 +1,6 @@
 # Project Title
 
-Rock, Paper, Scissors Project for Udacity Project
+Rock, Paper, Scissors for Udacity Project
 
 ## Getting Started
 
