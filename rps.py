@@ -1,39 +1,27 @@
-# My Rock, Paper, Scissor Project
-# for Udacity Into to Programming class
-# Written by: Cambron Deatherage
-# Rules:
-# Rock beats scissors
-# Scissors beats paper
-# Paper beats rock
-import random
+#!/usr/bin/env python3
+
+"""This program plays a game of Rock, Paper, Scissors between two Players,
+and reports both Player's scores each round."""
 
 moves = ['rock', 'paper', 'scissors']
 
+"""The Player class is the parent class for all of the Players
+in this game"""
 
-class Player():
 
-    def __init__(self):
-
-        self.score = 0
-
+class Player:
     def move(self):
+        return 'rock'
 
-        return moves[0]
-
-    def learn(self, learn_move):
-
+    def learn(self, my_move, their_move):
         pass
-# Parent Player class
-
-
+    
 class RandomPlayer(Player):
     def move(self):
         throw = random.choice(moves)
         return (throw)
-# This class selects a random move choice
-
-
-class ReflectPlayer(Player):
+    
+class ReflectPlayer:
 
     def __init__(self):
 
@@ -42,18 +30,32 @@ class ReflectPlayer(Player):
 
     def move(self):
         if self.learn_move is None:
-            throw = moves[0]                      # First move is always rock
+            throw = moves[0]                 
         else:
-            throw = self.learn_move               # next move is humanplayers
-            return (throw)                        # previous move
+            throw = self.learn_move               
+            return (throw)                        
 
     def learn(self, learn_move):
 
-        self.learn_move = learn_move
-# This Class reflects the human players 1st and 2nd moves
+        self.learn_move = learn_move    
 
+    def beats(one, two):
+    return ((one == 'rock' and two == 'scissors') or
+            (one == 'scissors' and two == 'paper') or
+            (one == 'paper' and two == 'rock'))
 
-class Cycles(Player):
+class HumanPlayer:
+
+    def move(self):
+
+        throw = input('rock, paper, scissors? >')
+
+        while throw != 'rock'and throw != 'paper'and throw != 'scissors':
+            print('Sorry try again')
+            throw = input('rock, paper, scissors? >')
+        return (throw)
+  
+ class Cycles:
 
     def __init__(self):
 
@@ -72,135 +74,29 @@ class Cycles(Player):
             throw = moves[2]
             self.step = self.step + 1
         return throw
-# This Class cycles through the moves list starting at rock
 
-
-class HumanPlayer(Player):
-
-    def move(self):
-
-        throw = input('rock, paper, scissors? >')
-
-        while throw != 'rock'and throw != 'paper'and throw != 'scissors':
-            print('Sorry try again')
-            throw = input('rock, paper, scissors? >')
-        return (throw)
-# This class requests a human player to make a selection
-# ask what the human play wanr to play and checks
-# if the input is correct
-
-class Game():
-
-    def __init__(self, p2):
-        self.p1 = HumanPlayer()
+class Game:
+    def __init__(self, p1, p2):
+        self.p1 = p1
         self.p2 = p2
-
-    def play_game(self):
-
-        print("Rock Paper Scissors, Go!")
-        for round in range(3):
-            print (f"Round {round}:")
-            self.play_round()
-        if self.p1.score > self.p2.score:
-            print('Player 1 won!')
-        elif self.p1.score < self.p2.score:
-            print('Player 2 won!')
-        else:
-            print('The game was a tie!')
-        print('The final score ' + str(self.p1.score) + ' TO ' +
-              str(self.p2.score))
-# This class starts the game prints information and calls the playround class
-# Also prints out the final score
-
-    def play_single(self):
-        print("Rock Paper Scissors, Go!")
-        print (f"Round 1 of 1:")
-        self.play_round()
-        if self.p1.score > self.p2.score:
-            print('Player 1 won!')
-        elif self.p1.score < self.p2.score:
-            print('Player 2 won!')
-        else:
-            print('The game was a tie!')
-        print('The final score ' + str(self.p1.score) + ' TO ' +
-              str(self.p2.score))
-# This class will play a single round of RPS
-# A copy of play_game w/o for loop
 
     def play_round(self):
         move1 = self.p1.move()
         move2 = self.p2.move()
-        result = Game.play(move1, move2)
-        self.p1.learn(move2)
-        self.p2.learn(move1)
-# This class calls the play class, sets the move 1 and 2 variables
-# then sets the result variable. Plus stores the players move
+        print(f"Player 1: {move1}  Player 2: {move2}")
+        self.p1.learn(move1, move2)
+        self.p2.learn(move2, move1)
 
-    def play(self, move1, move2):
-            print(f"You played {move1}")
-            print(f"Opponent played {move2}")
-            if beats(move1, move2):
-                print ("** PLAYER ONE WINS **")
-                print(f"Score: Player 1: {move1}  Player 2: {move2}\n\n")
-                self.p1.score += 1
-                return 1
-            elif beats(move2, move1):
-                print ("** PLAYER TWO WINS **")
-                print(f"Score: Player 1: {move1}  Player 2: {move2}\n\n")
-                self.p2.score += 1
-                return 2
-            else:
-                print ("** It's A TIE **")
-                print(f"Score: Player 1: {move1}  Player 2: {move2}\n\n")
-                return 0
-# This class calls the beats functions
-
-
-def beats(one, two):
-    return ((one == 'rock' and two == 'scissors') or
-            (one == 'scissors' and two == 'paper') or
-            (one == 'paper' and two == 'rock'))
-# I believe beats would be considered a function and not a module because
-# it not part of a class...
-
+    def play_game(self):
+        print("Game start!")
+        for round in range(3):
+            print(f"Round {round}:")
+            self.play_round()
+        print("Game over!")
 
 if __name__ == '__main__':
-    answer = [Player(), RandomPlayer(), Cycles(), ReflectPlayer()]
-    p2 = input('Select the RPS game you would like to play or just hit any\
+    game = Game(Player(), RandomPlayer, ReflectPlayer(), Cycles())
+    game.play_game('Select the RPS game you would like to play or just hit any\
  key and enter for random game: [1]Rock, [2]Random,\
 [3]Reflective, or [4]Cycles: >')
-# answer is a player class list
-# p2 is output input from the user
-
-    while p2 != 1 or p2 != 2 or p2 != 3 or p2 != 4:
-        p2 = random.choice(answer)
-        break
-# If the entry is not a specific entry then
-# automatically selects a random choice
-
-    if p2 == '1':
-        p2 = Player()
-    elif p2 == '2':
-        p2 = RandomPlayer()
-    elif p2 == '3':
-        p2 = Cycles()
-    elif p2 == '4':
-        p2 = ReflectPlayer()
-# Set the p2 variable to the correct player class
-
-    rounds = input('Enter for [s]ingle game or [f]ull game: >')
-    Game = Game(p2)
-    while True:
-        if rounds == 's':
-            Game.play_single()
-            break
-        elif rounds == 'f':
-            Game.play_game()
-            break
-        else:
-            print('Sorry try again')
-            rounds = input('Enter 1 for a single\
-             game and 2 for a full game: >')
-# Ask to select the lenght of the game
-# checks to make sure the entry is correct
-# if not ask ask to repeat
+       
